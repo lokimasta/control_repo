@@ -1,10 +1,14 @@
-class minecraft {
-  file{'/opt/minecraft':
+class minecraft (
+  $url='https://launcher.mojang.com/v1/objects/35139deedbd5182953cf1caa23835da59ca3d7cd/server.jar',
+  $install_dir='/opt/minecraft',
+  )
+  }
+  file{$install_dir:
     ensure => directory,
   }
-  file{'/opt/minecraft/server.jar':
+  file{ "${install_dir}/server.jar":
     ensure => file,
-    source => 'https://launcher.mojang.com/v1/objects/35139deedbd5182953cf1caa23835da59ca3d7cd/server.jar',
+    source => $url,
     before => Service['minecraft'],
   }
   package{'java':
